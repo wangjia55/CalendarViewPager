@@ -4,6 +4,7 @@ package com.squareup.timessquare;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.timessquare.MonthCellDescriptor.RangeState;
@@ -41,6 +42,8 @@ public class CalendarCellView extends TextView {
   @SuppressWarnings("UnusedDeclaration") //
   public CalendarCellView(Context context, AttributeSet attrs) {
     super(context, attrs);
+//    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) getLayoutParams();
+//      layoutParams.setMargins(5,5,5,5);
   }
 
   public void setSelectable(boolean isSelectable) {

@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#F9E0D9"
+              android:layout_height="wrap_content"
+              android:background="#FFFFFF"
               android:orientation="vertical">
 
 
@@ -11,7 +11,6 @@
         android:id="@+id/head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:background="#ffffffff">
 
         <Button
@@ -53,51 +52,53 @@
         <LinearLayout
             android:id="@+id/weekRow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ffffffff"
-            android:paddingBottom="5dp">
+            android:layout_height="30dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="#ff898989">
 
             <TextView
                 style="@style/CalendarCell.DayHeader"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
 
             <TextView
                 style="@style/CalendarCell.DayHeader"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
 
             <TextView
                 style="@style/CalendarCell.DayHeader"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
 
             <TextView
                 style="@style/CalendarCell.DayHeader"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
 
             <TextView
                 style="@style/CalendarCell.DayHeader"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
 
             <TextView
                 style="@style/CalendarCell.DayHeader"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
 
             <TextView
                 style="@style/CalendarCell.DayHeader"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
         </LinearLayout>
 
         <com.squareup.timessquare.CalendarPickerView
             android:id="@+id/calendar_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:clipToPadding="false"/>
     </LinearLayout>
 </LinearLayout>

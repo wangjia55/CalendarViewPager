@@ -20,7 +20,7 @@ import java.util.List;
 public class MonthView extends LinearLayout {
     CalendarGridView grid;
     private Listener listener;
-    private SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM");
+    private SimpleDateFormat monthFormat = new SimpleDateFormat("MMM");
 
     public static MonthView create(ViewGroup parent, LayoutInflater inflater,
                                    DateFormat weekdayNameFormat, Listener listener, Calendar today) {

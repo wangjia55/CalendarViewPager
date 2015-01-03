@@ -1,12 +1,7 @@
 package com.squareup.timessquare.sample;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
@@ -14,7 +9,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;

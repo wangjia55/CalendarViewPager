@@ -4,14 +4,24 @@
     <item>
         <shape>
             <solid android:color="@color/custom_background"/>
+            <padding
+                android:bottom="5dp"
+                android:left="5dp"
+                android:right="5dp"
+                android:top="5dp"></padding>
         </shape>
     </item>
     <item>
         <shape android:shape="oval">
             <solid android:color="@color/custom_selected"/>
             <stroke
-                    android:width="@dimen/dimen_margin_circle"
-                    android:color="@color/transparent"/>
+                android:width="@dimen/dimen_margin_circle"
+                android:color="@color/transparent"/>
+            <padding
+                android:bottom="5dp"
+                android:left="5dp"
+                android:right="5dp"
+                android:top="5dp"></padding>
         </shape>
     </item>
 </layer-list>
