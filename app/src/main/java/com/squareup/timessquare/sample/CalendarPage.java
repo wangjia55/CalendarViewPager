@@ -1,7 +1,6 @@
 package com.squareup.timessquare.sample;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -16,14 +15,10 @@ import com.squareup.timessquare.CalendarPickerView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
 @SuppressLint("NewApi")
 public class CalendarPage extends FragmentActivity implements
 		OnPageChangeListener{
-	// 請求碼和回響碼
-
-	public boolean isLaunching;
 	private int position;
 	private CalendarPickerView calendarPickView;
 	private TextView title;
@@ -38,15 +33,6 @@ public class CalendarPage extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.calendar_picker);
-		isLaunching = true;
-		// 初始化配置文件
-		SharedPreferences appConfig = getSharedPreferences("app_config",
-				MODE_PRIVATE);
-		Map<String, ?> all = appConfig.getAll();
-		checkConfig(appConfig, "calendar_max_year", 1);
-		checkConfig(appConfig, "calendar_start_year", 1995);
-		checkConfig(appConfig, "calendar_start_month", 0);
-		checkConfig(appConfig, "calendar_start_date", 1);
 
 		// 計算每天格子的大小 為調整buttom做準備
 		DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
@@ -55,16 +41,13 @@ public class CalendarPage extends FragmentActivity implements
 
 		// 初始化CalendarPickView的時間跨度
 		final Calendar targetDate = Calendar.getInstance();
-		targetDate.add(Calendar.YEAR, appConfig.getInt("calendar_max_year", 1));
+        int day = targetDate.get(Calendar.DATE);
+        int maxday = targetDate.getActualMaximum(Calendar.DAY_OF_MONTH);
+        targetDate.add(Calendar.DATE,maxday-day);
 
 		calendarPickView = (CalendarPickerView) findViewById(R.id.calendar_view);
 		Calendar startTime = Calendar.getInstance();
-		startTime.set(Calendar.YEAR,
-				appConfig.getInt("calendar_start_year", 1995));//
-		startTime.set(Calendar.MONTH,
-				appConfig.getInt("calendar_start_month", 0));//
-		startTime.set(Calendar.DAY_OF_MONTH,
-				appConfig.getInt("calendar_start_date", 1));//
+        startTime.add(Calendar.YEAR,-1);
 		Date startDate = startTime.getTime();
 
 
@@ -75,6 +58,7 @@ public class CalendarPage extends FragmentActivity implements
 		calendarPickView.setVerticalScrollBarEnabled(false);
 		calendarPickView.setEnabled(false);
 		calendarPickView.setOnPageChangeListener(this);
+
 		// 初始化Calendar位置
 		calendarPickView.setLayoutParams(new LinearLayout.LayoutParams(
 				calendarPickView.getLayoutParams().width, (cellSize * 6)));
@@ -117,28 +101,7 @@ public class CalendarPage extends FragmentActivity implements
 
 	}
 
-	// ***************************************//
-	// ******************生命週期方法************//
-	// ***************************************//
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.FragmentActivity#onResume()
-	 */
-	@Override
-	protected void onResume() {
-		super.onResume();
-	}
-
-
-	// ***************************************//
-	// ******************接口實現方法***********//
-	// ***************************************//
 	// 改变bottom位置
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
@@ -160,17 +123,6 @@ public class CalendarPage extends FragmentActivity implements
 			rowFive = calendarPickView.getY() + (cellSize * 5);
 			rowSix = calendarPickView.getY() + (cellSize * 6);
 			rowFour = calendarPickView.getY() + (cellSize * 4);
-		}
-	}
-
-
-	// ***************************************//
-	// ******************工具方法***************//
-	// ***************************************//
-	public void checkConfig(SharedPreferences appConfig, String key, int val) {
-		Map<String, ?> map = appConfig.getAll();
-		if (!map.containsKey(key)) {
-			appConfig.edit().putInt(key, val).commit();
 		}
 	}
 

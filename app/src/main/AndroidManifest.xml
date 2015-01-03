@@ -17,7 +17,7 @@
         android:debuggable="true"
         android:allowBackup="true" tools:ignore="HardcodedDebugMode">
         <activity
-            android:name=".CalendarPage"
+            android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             >
             <intent-filter>

@@ -3,6 +3,7 @@ package com.squareup.timessquare;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -12,20 +13,21 @@ import android.widget.TextView;
 import com.squareup.timessquare.sample.R;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
 public class MonthView extends LinearLayout {
     CalendarGridView grid;
     private Listener listener;
+    private SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM");
 
     public static MonthView create(ViewGroup parent, LayoutInflater inflater,
                                    DateFormat weekdayNameFormat, Listener listener, Calendar today) {
         final MonthView view = (MonthView) inflater.inflate(R.layout.month, parent, false);
-//       view.setDividerColor(R.color.transparent);
-//        view.setDayTextColor(R.color.custom_calendar_text_selector);
+        view.setDividerColor(R.color.transparent);
+        view.setDayTextColor(R.color.custom_calendar_text_selector);
 //        view.setTitleTextColor(R.color.custom_calendar_text_selector);
-//        view.setHeaderTextColor(R.color.custom_header_text);
         view.setDisplayHeader(false);
         view.setDayBackground(R.drawable.custom_calendar_bg_selector);
 
@@ -47,7 +49,8 @@ public class MonthView extends LinearLayout {
         super(context, attrs);
     }
 
-    @Override protected void onFinishInflate() {
+    @Override
+    protected void onFinishInflate() {
         super.onFinishInflate();
         grid = (CalendarGridView) findViewById(R.id.calendar_grid);
     }
@@ -69,7 +72,12 @@ public class MonthView extends LinearLayout {
 
                     String cellDate = Integer.toString(cell.getValue());
                     if (!cellView.getText().equals(cellDate)) {
-                        cellView.setText(cellDate);
+                        //如果是当月的第一天显示月份
+                        if (cellDate.equals("1")) {
+                            cellView.setText(monthFormat.format(cell.getDate()));
+                        } else {
+                            cellView.setText(cellDate);
+                        }
                     }
                     cellView.setEnabled(cell.isCurrentMonth());
                     cellView.setSelectable(cell.isSelectable());
@@ -89,7 +97,8 @@ public class MonthView extends LinearLayout {
     }
 
     public void setDividerColor(int color) {
-        grid.setDividerColor(color);
+//        grid.setDividerColor(color);
+        grid.setDividerColor(getResources().getColor(R.color.transparent));
     }
 
     public void setDayBackground(int resId) {
@@ -97,7 +106,7 @@ public class MonthView extends LinearLayout {
     }
 
     public void setDayTextColor(int resId) {
-        grid.setDayTextColor(resId);
+        grid.setDayTextColor(R.color.custom_calendar_text_selector);
     }
 
     public void setDisplayHeader(boolean displayHeader) {

@@ -37,7 +37,6 @@ public class CalendarPickerView extends ViewPager {
 	private final DateFormat fullDateFormat;
 	public final List<MonthDescriptor> months = new ArrayList<MonthDescriptor>();
 	public final List<List<List<MonthCellDescriptor>>> cells = new ArrayList<List<List<MonthCellDescriptor>>>();
-	public int monthView1Height;
 
 	public MonthCellDescriptor selectedCell;
 	final Calendar today = Calendar.getInstance();
@@ -51,8 +50,8 @@ public class CalendarPickerView extends ViewPager {
 
 	public CalendarPickerView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-
 		final int bg = context.getResources().getColor(R.color.calendar_bg);
+
 		monthNameFormat = new SimpleDateFormat(
 				context.getString(R.string.month_name_format));
 		weekdayNameFormat = new SimpleDateFormat(
@@ -280,7 +279,6 @@ public class CalendarPickerView extends ViewPager {
 					indexHelper.put(cell.getDate().getTime(), new Integer[] {
 						monthIndex, weekIndex, c });
 				}
-//				Log.e("cell time", simpleDateFormat.format(cell.getDate()));
 				if (isSelected) {
 					selectedCell = cell;
 				}
@@ -300,16 +298,6 @@ public class CalendarPickerView extends ViewPager {
 		return cal.get(MONTH) == selectedDate.get(MONTH)
 				&& cal.get(YEAR) == selectedDate.get(YEAR)
 				&& cal.get(DAY_OF_MONTH) == selectedDate.get(DAY_OF_MONTH);
-	}
-
-	public static boolean betweenDates(Calendar cal, long minCalLong,
-			long maxCalLong) {
-		final Date date = cal.getTime();
-		Calendar minCal = Calendar.getInstance();
-		minCal.setTimeInMillis(minCalLong);
-		Calendar maxCal = Calendar.getInstance();
-		maxCal.setTimeInMillis(maxCalLong);
-		return betweenDates(date, minCal, maxCal);
 	}
 
 	private static boolean betweenDates(Calendar cal, Calendar minCal,
@@ -347,40 +335,7 @@ public class CalendarPickerView extends ViewPager {
 		// Track the currently selected date value.
 		Date date2 = cell.getDate();
 		selectedCal.setTime(date2);
-	}
 
-	// *****************************************************************//
-	// ***************************** 作廢方法****************************//
-	// *****************************************************************//
-	
-	
-	
-	// public ArrayList<MonthCellDescriptor> findMonthCellByEvent(PNEvent
-	// pnEvent) {
-	// ArrayList<MonthCellDescriptor> cellList = new
-	// ArrayList<MonthCellDescriptor>();
-	// // 當cell的date在event開始結束之間時就加入這個list
-	// // 1,event的開始結束時間再同一天的情況
-	// Calendar minCal = Calendar.getInstance();
-	// Calendar maxCal = Calendar.getInstance();
-	// minCal.setTimeInMillis(pnEvent.dtstart);
-	// maxCal.setTimeInMillis(pnEvent.dtend);
-	// if (sameDate(minCal, maxCal)) {
-	// setMidnight(minCal);
-	// Integer[] indexs = indexHelper.get(minCal.getTimeInMillis());
-	// if (indexs != null) {
-	// for (int i = 0; i < indexs.length; i++) {
-	// System.out.println("indexs" + "[" + i + "]" + "="
-	// + indexs[i]);
-	// }
-	// MonthCellDescriptor cell = cells.get(indexs[0]).get(indexs[1])
-	// .get(indexs[2]);
-	// cellList.add(cell);
-	// }
-	// } else {// 如果是跨幾天的情況
-	// // 暫時什麼都不做
-	// }
-	//
-	// return cellList;
-	// }
+        System.out.println("selectDAy:"+new SimpleDateFormat("yyyy-MM-dd").format(date2));
+	}
 }
