@@ -1,18 +1,23 @@
 package com.squareup.timessquare.sample;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.timessquare.CalendarPickerView;
@@ -21,19 +26,24 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-@SuppressLint("NewApi")
-public class CalendarView extends LinearLayout implements OnPageChangeListener {
+public class CalendarView extends RelativeLayout implements OnPageChangeListener {
 	private int position;
-	private TextView title;
+	private CheckedTextView title;
     private int cellSize;
     private float rowFive;
     private float rowSix;
     private float rowFour;
+    private LinearLayout mLinearCalendar;
+    private RelativeLayout mRelativeHead;
     private CalendarPickerView calendarPickView;
+
 
     public CalendarView(Context context) {
         super(context);
     }
+
+    AnimUtils animUtils = new AnimUtils();
+    int count = 0;
 
     public CalendarView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -41,7 +51,6 @@ public class CalendarView extends LinearLayout implements OnPageChangeListener {
         // 計算每天格子的大小 為調整buttom做準備
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         cellSize = displayMetrics.widthPixels / 7;
-
 
         // 初始化CalendarPickView的時間跨度
         final Calendar targetDate = Calendar.getInstance();
@@ -53,7 +62,6 @@ public class CalendarView extends LinearLayout implements OnPageChangeListener {
         Calendar startTime = Calendar.getInstance();
         startTime.add(Calendar.YEAR,-1);
         Date startDate = startTime.getTime();
-
 
         // 开始初始化Calendar
         calendarPickView.init(new Date(), startDate, targetDate.getTime(),
@@ -69,10 +77,26 @@ public class CalendarView extends LinearLayout implements OnPageChangeListener {
         position = calendarPickView.selectedIndex;
         Log.e("position:11",position+"");
 
+        mRelativeHead = (RelativeLayout) findViewById(R.id.head);
+        mLinearCalendar = (LinearLayout) findViewById(R.id.linear_view);
+        mLinearCalendar.setTranslationY(-3000);
         // title部分
-        title = (TextView) findViewById(R.id.title);
+        title = (CheckedTextView) findViewById(R.id.title);
         title.setText(new SimpleDateFormat("MMMM yyyy").format(targetDate
                 .getTime()));
+
+        title.setChecked(false);
+        title.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (count%2==0){
+                    animUtils.showAnimate(mLinearCalendar);
+                }else{
+                    animUtils.dismissAnimate(mLinearCalendar);
+                }
+                count++;
+            }
+        });
 
         // 星期部分
         LinearLayout headerRow = (LinearLayout) findViewById(R.id.weekRow);
@@ -98,6 +122,7 @@ public class CalendarView extends LinearLayout implements OnPageChangeListener {
         });
     }
 
+
     public CalendarView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
@@ -117,9 +142,6 @@ public class CalendarView extends LinearLayout implements OnPageChangeListener {
 	@SuppressLint("NewApi")
 	@Override
 	public void onPageSelected(int arg0) {
-//        position = calendarPickView.selectedIndex;
-        Log.e("position:222",position+"");
-
 		title.setText(calendarPickView.months.get(arg0).getLabel());
 		// 计算在不同行數的情况下 bottom的位置
 		if (rowFive == 0 || rowSix == 0 || rowFour == 0) {
