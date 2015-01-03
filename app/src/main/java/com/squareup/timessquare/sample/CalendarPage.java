@@ -1,21 +1,17 @@
 package com.squareup.timessquare.sample;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.timessquare.CalendarPickerView;
-import com.squareup.timessquare.MonthCellDescriptor;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,8 +22,6 @@ import java.util.Map;
 public class CalendarPage extends FragmentActivity implements
 		OnPageChangeListener{
 	// 請求碼和回響碼
-	public static boolean refreshCPVTag;
-	public static int CALENDARPAGE_EVENTDETAIL_NORMAL = 11101;
 
 	public boolean isLaunching;
 	private int position;
@@ -38,15 +32,12 @@ public class CalendarPage extends FragmentActivity implements
 	private float rowFive;
 	private float rowSix;
 	private float rowFour;
-	private Handler handler;
-	private int monthIndex;
 
 	@SuppressLint({ "SimpleDateFormat", "NewApi" })
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.calendar_picker);
-		handler = new Handler();
 		isLaunching = true;
 		// 初始化配置文件
 		SharedPreferences appConfig = getSharedPreferences("app_config",
@@ -84,7 +75,6 @@ public class CalendarPage extends FragmentActivity implements
 		calendarPickView.setVerticalScrollBarEnabled(false);
 		calendarPickView.setEnabled(false);
 		calendarPickView.setOnPageChangeListener(this);
-		monthIndex = calendarPickView.selectedCell.getMonthIndex();//把选中月份设置为今天
 		// 初始化Calendar位置
 		calendarPickView.setLayoutParams(new LinearLayout.LayoutParams(
 				calendarPickView.getLayoutParams().width, (cellSize * 6)));

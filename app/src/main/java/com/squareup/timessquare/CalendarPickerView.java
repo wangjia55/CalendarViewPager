@@ -49,11 +49,9 @@ public class CalendarPickerView extends ViewPager {
 	private final MonthView.Listener listener = new CellClickedListener();
 	public int selectedIndex;
 
-	@SuppressLint("SimpleDateFormat")
 	public CalendarPickerView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
-		@SuppressWarnings("unused")
 		final int bg = context.getResources().getColor(R.color.calendar_bg);
 		monthNameFormat = new SimpleDateFormat(
 				context.getString(R.string.month_name_format));
@@ -277,11 +275,7 @@ public class CalendarPickerView extends ViewPager {
 				boolean hasEvent = false;
 				MonthCellDescriptor cell = null;
 				cell = new MonthCellDescriptor(date, isCurrentMonth,
-						isSelectable, isSelected, hasEvent, isToday, value);
-				//為cell 設置索引 
-				cell.setMonthIndex(monthIndex);
-				cell.setWeekIndex(weekIndex);
-				cell.setDayIndex(c);
+						isSelectable, isSelected, hasEvent, isToday, value,null);
 				if (isSelectable) {
 					indexHelper.put(cell.getDate().getTime(), new Integer[] {
 						monthIndex, weekIndex, c });

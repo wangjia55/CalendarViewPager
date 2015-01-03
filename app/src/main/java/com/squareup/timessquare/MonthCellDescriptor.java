@@ -1,100 +1,98 @@
 // Copyright 2012 Square, Inc.
+
 package com.squareup.timessquare;
 
 import java.util.Date;
 
-
 /** Describes the state of a particular date cell in a {@link com.squareup.timessquare.MonthView}. */
-public class MonthCellDescriptor {
-	private final Date date;
-	private final int value;
-	private final boolean isCurrentMonth;
-	private boolean isSelected;
-	private final boolean isToday;
-	private final boolean isSelectable;
-	public boolean hasEvent;
-	private int monthIndex;
-	private int weekIndex;
-	private int dayIndex;
+class MonthCellDescriptor {
+    public enum RangeState {
+        NONE, FIRST, MIDDLE, LAST
+    }
 
-	MonthCellDescriptor(Date date, boolean currentMonth, boolean selectable,
-			boolean selected, boolean hasEvent, boolean today, int value) {
-		this.date = date;
-		isCurrentMonth = currentMonth;
-		isSelectable = selectable;
-		isSelected = selected;
-		isToday = today;
-		this.hasEvent = hasEvent;
-		this.value = value;
-	}
-	
-	public int getMonthIndex() {
-		return monthIndex;
-	}
+    private final Date date;
+    private final int value;
+    private final boolean isCurrentMonth;
+    private boolean isSelected;
+    private final boolean isToday;
+    private final boolean isSelectable;
+    private boolean isHighlighted;
+    private RangeState rangeState;
 
-	public void setMonthIndex(int monthIndex) {
-		this.monthIndex = monthIndex;
-	}
+    MonthCellDescriptor(Date date, boolean currentMonth, boolean selectable, boolean selected,
+                        boolean today, boolean highlighted, int value, RangeState rangeState) {
+        this.date = date;
+        isCurrentMonth = currentMonth;
+        isSelectable = selectable;
+        isHighlighted = highlighted;
+        isSelected = selected;
+        isToday = today;
+        this.value = value;
+        this.rangeState = rangeState;
+    }
 
-	public int getWeekIndex() {
-		return weekIndex;
-	}
+    public Date getDate() {
+        return date;
+    }
 
-	public void setWeekIndex(int weekIndex) {
-		this.weekIndex = weekIndex;
-	}
+    public boolean isCurrentMonth() {
+        return isCurrentMonth;
+    }
 
-	public int getDayIndex() {
-		return dayIndex;
-	}
+    public boolean isSelectable() {
+        return isSelectable;
+    }
 
-	public void setDayIndex(int dayIndex) {
-		this.dayIndex = dayIndex;
-	}
+    public boolean isSelected() {
+        return isSelected;
+    }
 
-	public void setHasEvent(boolean hasEvent) {
-		this.hasEvent = hasEvent;
-	}
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
+    boolean isHighlighted() {
+        return isHighlighted;
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    void setHighlighted(boolean highlighted) {
+        isHighlighted = highlighted;
+    }
 
-	public boolean isCurrentMonth() {
-		return isCurrentMonth;
-	}
+    public boolean isToday() {
+        return isToday;
+    }
 
-	public boolean isSelectable() {
-		return isSelectable;
-	}
+    public RangeState getRangeState() {
+        return rangeState;
+    }
 
-	public boolean isSelected() {
-		return isSelected;
-	}
+    public void setRangeState(RangeState rangeState) {
+        this.rangeState = rangeState;
+    }
 
-	public void setSelected(boolean selected) {
-		isSelected = selected;
-	}
+    public int getValue() {
+        return value;
+    }
 
-	public boolean isToday() {
-		return isToday;
-	}
-
-	public int getValue() {
-		return value;
-	}
-
-	public boolean isHasEvent() {
-		return hasEvent;
-	}
-
-
-	@Override
-	public String toString() {
-		return "MonthCellDescriptor{" + "date=" + date + ", value=" + value
-				+ ", isCurrentMonth=" + isCurrentMonth + ", isSelected="
-				+ isSelected + ", isToday=" + isToday + ", isSelectable="
-				+ isSelectable + '}';
-	}
+    @Override public String toString() {
+        return "MonthCellDescriptor{"
+                + "date="
+                + date
+                + ", value="
+                + value
+                + ", isCurrentMonth="
+                + isCurrentMonth
+                + ", isSelected="
+                + isSelected
+                + ", isToday="
+                + isToday
+                + ", isSelectable="
+                + isSelectable
+                + ", isHighlighted="
+                + isHighlighted
+                + ", rangeState="
+                + rangeState
+                + '}';
+    }
 }
