@@ -14,7 +14,6 @@
         <com.squareup.timessquare.CalendarRowView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/calendar_day_headers_paddingbottom"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -52,11 +51,11 @@
                 style="@style/CalendarCell.DayHeader"
                 />
         </com.squareup.timessquare.CalendarRowView>
-        <include layout="@layout/week"/>
-        <include layout="@layout/week"/>
-        <include layout="@layout/week"/>
-        <include layout="@layout/week"/>
-        <include layout="@layout/week"/>
-        <include layout="@layout/week"/>
+        <include layout="@layout/layout_calendar_week"/>
+        <include layout="@layout/layout_calendar_week"/>
+        <include layout="@layout/layout_calendar_week"/>
+        <include layout="@layout/layout_calendar_week"/>
+        <include layout="@layout/layout_calendar_week"/>
+        <include layout="@layout/layout_calendar_week"/>
     </com.squareup.timessquare.CalendarGridView>
 </com.squareup.timessquare.MonthView>

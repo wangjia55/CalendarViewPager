@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.squareup.timessquare.MonthContentView
+    android:id="@+id/month_content_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    app:dayBackground="@drawable/custom_calendar_bg_selector"
+    app:dayTextColor="@color/custom_calendar_text_selector"
+    app:dividerColor="@color/transparent"
+    app:headerTextColor="@color/custom_header_text"
+    app:titleTextColor="@color/custom_calendar_text_selector">
+
+</com.squareup.timessquare.MonthContentView>

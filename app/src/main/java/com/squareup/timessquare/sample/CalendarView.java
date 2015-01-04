@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckedTextView;
@@ -41,7 +40,7 @@ public class CalendarView extends RelativeLayout implements OnPageChangeListener
 
     public CalendarView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.calendar_picker,this);
+        LayoutInflater.from(context).inflate(R.layout.layout_calendar_picker,this);
         // 計算每天格子的大小 為調整buttom做準備
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         cellSize = displayMetrics.widthPixels / 7;
@@ -69,7 +68,6 @@ public class CalendarView extends RelativeLayout implements OnPageChangeListener
         calendarPickView.setLayoutParams(new LinearLayout.LayoutParams(
                 calendarPickView.getLayoutParams().width, (cellSize * 6)));
         position = calendarPickView.selectedIndex;
-        Log.e("position:11",position+"");
 
         mRelativeHead = (RelativeLayout) findViewById(R.id.head);
         mLinearCalendar = (LinearLayout) findViewById(R.id.linear_view);

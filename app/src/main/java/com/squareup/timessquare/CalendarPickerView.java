@@ -135,7 +135,7 @@ public class CalendarPickerView extends ViewPager {
 					monthNameFormat.format(monthCounter.getTime()));
 			cells.add(getMonthCells(month, monthCounter, selectedCal,
 					months.size()));// month size 本月加入后的position
-			Logr.d("Adding month %s", month);
+//			Logr.d("Adding month %s", month);
 			if (selectedMonth == month.getMonth()
 					&& selectedYear == month.getYear()) {
 				selectedIndex = months.size();

@@ -23,13 +23,24 @@ public class MonthView extends LinearLayout {
     private SimpleDateFormat monthFormat = new SimpleDateFormat("MMM");
 
     public static MonthView create(ViewGroup parent, LayoutInflater inflater,
-                                   DateFormat weekdayNameFormat, Listener listener, Calendar today) {
-        final MonthView view = (MonthView) inflater.inflate(R.layout.month, parent, false);
-        view.setDividerColor(R.color.transparent);
-        view.setDayTextColor(R.color.custom_calendar_text_selector);
-//        view.setTitleTextColor(R.color.custom_calendar_text_selector);
-        view.setDisplayHeader(false);
-        view.setDayBackground(R.drawable.custom_calendar_bg_selector);
+                                   DateFormat weekdayNameFormat,
+                                   Listener listener,
+                                   Calendar today,
+                                   int dividerColor,
+                                   int dayBackgroundResId,
+                                   int dayTextColorResId,
+                                   boolean displayHeader,
+                                   int headerTextColor) {
+
+        final MonthView view = (MonthView) inflater.inflate(R.layout.layout_calendar_month, parent, false);
+        view.setDividerColor(dividerColor);
+        view.setDayTextColor(dayTextColorResId);
+        view.setDisplayHeader(displayHeader);
+        view.setHeaderTextColor(headerTextColor);
+
+        if (dayBackgroundResId != 0) {
+            view.setDayBackground(dayBackgroundResId);
+        }
 
         final int originalDayOfWeek = today.get(Calendar.DAY_OF_WEEK);
 
@@ -96,9 +107,9 @@ public class MonthView extends LinearLayout {
         Logr.d("MonthView.init took %d ms", System.currentTimeMillis() - start);
     }
 
+
     public void setDividerColor(int color) {
-//        grid.setDividerColor(color);
-        grid.setDividerColor(getResources().getColor(R.color.transparent));
+        grid.setDividerColor(color);
     }
 
     public void setDayBackground(int resId) {
@@ -106,7 +117,7 @@ public class MonthView extends LinearLayout {
     }
 
     public void setDayTextColor(int resId) {
-        grid.setDayTextColor(R.color.custom_calendar_text_selector);
+        grid.setDayTextColor(resId);
     }
 
     public void setDisplayHeader(boolean displayHeader) {

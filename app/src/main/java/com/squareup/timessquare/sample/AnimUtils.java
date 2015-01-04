@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -30,26 +31,30 @@ public class AnimUtils {
         slideInFrame.addView(view);
         parentView.addView(slideInFrame, positionView);
 
-        ObjectAnimator slideInAnim = null;
-        float viewWidth = view.getWidth();
-        float viewHeight = view.getHeight();
 
+        ObjectAnimator slideInAnim = null;
+        final float viewHeight = view.getHeight();
+
+        view.setVisibility(View.VISIBLE);
         view.setTranslationY(-viewHeight);
+
         slideInAnim = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y,
                 slideInFrame.getY());
+
         slideInAnim.setInterpolator(new AccelerateDecelerateInterpolator());
-        slideInAnim.setDuration(400);
+        slideInAnim.setDuration(300);
         slideInAnim.addListener(new AnimatorListenerAdapter() {
 
             @Override
             public void onAnimationStart(Animator animation) {
-                view.setVisibility(View.VISIBLE);
+                view.setTranslationY(-viewHeight);
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
                 slideInFrame.removeAllViews();
                 view.setLayoutParams(slideInFrame.getLayoutParams());
+                parentView.removeView(slideInFrame);
                 parentView.addView(view, positionView);
             }
         });
@@ -59,11 +64,11 @@ public class AnimUtils {
 
     public void dismissAnimate(final View view) {
         final ViewGroup parentView = (ViewGroup) view.getParent();
+
         final FrameLayout slideOutFrame = new FrameLayout(view.getContext());
         final int positionView = parentView.indexOfChild(view);
         slideOutFrame.setLayoutParams(view.getLayoutParams());
         slideOutFrame.setClipChildren(true);
-
 
         parentView.removeView(view);
         slideOutFrame.addView(view);
@@ -72,21 +77,18 @@ public class AnimUtils {
         final ObjectAnimator slideAnim = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y,
                 view.getTranslationY() - view.getHeight());
 
-        AnimatorSet slideSet = new AnimatorSet();
-        slideSet.play(slideAnim);
-        slideSet.setInterpolator(new AccelerateDecelerateInterpolator());
-        slideSet.setDuration(400);
-        slideSet.addListener(new AnimatorListenerAdapter() {
+        slideAnim.setInterpolator(new AccelerateDecelerateInterpolator());
+        slideAnim.setDuration(200);
+        slideAnim.addListener(new AnimatorListenerAdapter() {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                view.setVisibility(View.INVISIBLE);
-                slideAnim.reverse();
+                view.setVisibility(View.GONE);
                 slideOutFrame.removeAllViews();
                 parentView.removeView(slideOutFrame);
                 parentView.addView(view, positionView);
             }
         });
-        slideSet.start();
+        slideAnim.start();
     }
 }
